@@ -32,6 +32,8 @@
             <h2 class="text-center">Admin Panel</h2>
             <ul class="nav flex-column">
                 <li class="nav-item"><a class="nav-link text-white" href="{{route('admin.dashboard')}}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{route('admin.permissions.index')}}">Permissions</a></li>
+                <li class="nav-item"><a class="nav-link text-white" href="{{route('admin.roles.index')}}">Roles</a></li>
                 <li class="nav-item">
                     <form method="POST" action="{{ route('admin.logout') }}" class="d-inline w-100">
                         @csrf
@@ -47,6 +49,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    @stack('scripts')
 </body>
 
 </html>
