@@ -5,13 +5,16 @@ use App\Http\Controllers\front\HomeController;
 use App\Http\Controllers\admin\HomeController as AdminHomeController;
 use App\Http\Controllers\admin\AuthController as AdminAuthController;
 use App\Http\Controllers\admin\RolePermissionController;
+use App\Http\Controllers\owner\AuthController as OwnerAuthController;
+use App\Http\Controllers\owner\HomeController as OwnerHomeController;
+use App\Models\User;
 
 Route::get('/', [HomeController::class, 'index'])->name('/');
 
 Route::prefix('admin')->group(function() {
     Route::get('/login', [AdminAuthController::class, 'login'])->name('admin.login');
     Route::post('/login', [AdminAuthController::class, 'loginProcess'])->name('admin.login');
-    Route::middleware('auth')->group(function() {
+    Route::middleware(['auth', 'role:'.User::ROLE_ADMIN])->group(function() {
         Route::get('/', [AdminHomeController::class, 'index'])->name('admin.dashboard');
 
         //roles
@@ -29,5 +32,15 @@ Route::prefix('admin')->group(function() {
         Route::delete('permission/{id}', [RolePermissionController::class, 'deletePermission'])->name('admin.permission.delete');
 
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+    });
+});
+
+Route::prefix('owner')->group(function() {
+    Route::match(['get', 'post'], '/login', [OwnerAuthController::class, 'login'])->name('owner.login');
+    Route::match(['get', 'post'], 'register', [OwnerAuthController::class, 'register'])->name('owner.register');
+
+    Route::middleware(['auth', 'role:'.User::ROLE_OWNER])->group(function() {
+        Route::get('/', [OwnerHomeController::class, 'index'])->name('owner.dashboard');
+        Route::post('logout', [OwnerAuthController::class, 'logout'])->name('owner.logout');
     });
 });
