@@ -18,9 +18,9 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    const ROLE_USER = 0;
-    const ROLE_ADMIN = 1;
-    const ROLE_OWNER = 2;
+    const ROLE_USER = 'user';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_OWNER = 'owner';
 
     protected $fillable = [
         'name',
